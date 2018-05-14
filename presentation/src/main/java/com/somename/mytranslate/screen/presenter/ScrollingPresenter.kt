@@ -17,7 +17,7 @@ constructor(private val mLoadWordsFromDB: LoadWordsFromDB, private val mSearchWo
 
     fun init() {
         view?.showLoading()
-        mLoadWordsFromDB.execute(object : DisposableObserver<List<WordFromDB>>(){
+        mLoadWordsFromDB.execute(object : DisposableObserver<List<WordFromDB>>() {
             override fun onNext(words: List<WordFromDB>) {
                 view?.showWords(mWordFromDBViewModelMapper.map(words))
             }
@@ -36,7 +36,7 @@ constructor(private val mLoadWordsFromDB: LoadWordsFromDB, private val mSearchWo
 
     fun searchWord(word: String) {
         mSearchWordFromDB.setWord(word)
-        mSearchWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>(){
+        mSearchWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>() {
             override fun onNext(words: List<WordFromDB>) {
                 view?.showWords(mWordFromDBViewModelMapper.map(words))
             }
@@ -53,7 +53,7 @@ constructor(private val mLoadWordsFromDB: LoadWordsFromDB, private val mSearchWo
 
     fun removeWord(word: WordFromDBViewModel) {
         mRemoveWordFromDB.setWord(mWordFromDBViewModelMapper.reverseMap(word))
-        mRemoveWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>(){
+        mRemoveWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>() {
             override fun onNext(words: List<WordFromDB>) {
                 view?.showWords(mWordFromDBViewModelMapper.map(words))
             }

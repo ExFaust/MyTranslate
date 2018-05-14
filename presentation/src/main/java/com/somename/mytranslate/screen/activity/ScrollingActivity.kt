@@ -25,7 +25,6 @@ import java.util.ArrayList
 
 import javax.inject.Inject
 import android.view.MenuItem
-import android.view.View
 
 
 class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, ScrollingPresenter.View, RecyclerAdapter.OnClickListener {
@@ -57,7 +56,7 @@ class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, 
         mPresenter.init()
 
         fab.setOnClickListener {
-            startActivity(Intent(this,TranslateActivity::class.java))
+            startActivity(Intent(this, TranslateActivity::class.java))
         }
     }
 
@@ -88,7 +87,7 @@ class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, 
                 .setPositiveButton(getString(android.R.string.ok), { _: DialogInterface, _: Int ->
                     mAdapter?.getItem(position)?.let { mPresenter.removeWord(it) }
                 })
-                .setNegativeButton(getString(android.R.string.no),null)
+                .setNegativeButton(getString(android.R.string.no), null)
                 .create()
                 .show()
     }

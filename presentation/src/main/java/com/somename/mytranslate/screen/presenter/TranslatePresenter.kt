@@ -1,17 +1,14 @@
 package com.somename.mytranslate.screen.presenter
 
-import android.content.Intent
 import com.somename.domain.model.WordFromDB
 import com.somename.domain.model.WordFromTranslator
 import com.somename.domain.usecase.AddWordToDB
 import com.somename.domain.usecase.GetTranslate
-import com.somename.domain.usecase.LoadWordsFromDB
 import com.somename.domain.usecase.SearchWordFromDB
 import com.somename.mytranslate.content.WordFromDBViewModel
 import com.somename.mytranslate.content.WordFromTranslatorViewModel
 import com.somename.mytranslate.content.mapper.WordFromDBViewModelMapper
 import com.somename.mytranslate.content.mapper.WordFromTranslatorViewModelMapper
-import com.somename.mytranslate.screen.activity.ScrollingActivity
 import io.reactivex.observers.DisposableObserver
 import java.util.*
 import javax.inject.Inject
@@ -21,7 +18,7 @@ constructor(private val mAddWordToDB: AddWordToDB, private val mGetTranslate: Ge
             private val mWordFromDBViewModelMapper: WordFromDBViewModelMapper, private val mSearchWordFromDB: SearchWordFromDB,
             private val mWordFromTranslatorViewModelMapper: WordFromTranslatorViewModelMapper) : Presenter<TranslatePresenter.View>() {
 
-    fun addWord(word: WordFromTranslatorViewModel, originalText:String) {
+    fun addWord(word: WordFromTranslatorViewModel, originalText: String) {
         val wordFromDBViewModel = WordFromDBViewModel()
         wordFromDBViewModel.langWord = word.langWord
         wordFromDBViewModel.langTranslatedWord = word.langTranslatedWord
@@ -29,7 +26,7 @@ constructor(private val mAddWordToDB: AddWordToDB, private val mGetTranslate: Ge
         wordFromDBViewModel.text = originalText
         wordFromDBViewModel.id = UUID.randomUUID().toString()
         mAddWordToDB.setWord(mWordFromDBViewModelMapper.reverseMap(wordFromDBViewModel))
-        mAddWordToDB.execute(object : DisposableObserver<Boolean>(){
+        mAddWordToDB.execute(object : DisposableObserver<Boolean>() {
             override fun onNext(boolean: Boolean) {
 
             }
@@ -46,14 +43,14 @@ constructor(private val mAddWordToDB: AddWordToDB, private val mGetTranslate: Ge
         })
     }
 
-    fun searchWord(word: WordFromTranslatorViewModel, originalText:String) {
+    fun searchWord(word: WordFromTranslatorViewModel, originalText: String) {
         mSearchWordFromDB.setWord(originalText)
-        mSearchWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>(){
+        mSearchWordFromDB.execute(object : DisposableObserver<List<WordFromDB>>() {
             override fun onNext(words: List<WordFromDB>) {
                 if (words.isNotEmpty())
                     view?.showMessage(originalText)
                 else
-                    addWord(word,originalText)
+                    addWord(word, originalText)
             }
 
             override fun onError(e: Throwable) {
@@ -67,10 +64,10 @@ constructor(private val mAddWordToDB: AddWordToDB, private val mGetTranslate: Ge
     }
 
     fun getTranslate(text: String, lang: String) {
-        mGetTranslate.setWordAndLang(text,lang)
-        mGetTranslate.execute(object : DisposableObserver<WordFromTranslator>(){
+        mGetTranslate.setWordAndLang(text, lang)
+        mGetTranslate.execute(object : DisposableObserver<WordFromTranslator>() {
             override fun onNext(word: WordFromTranslator) {
-                view?.showTranslate(mWordFromTranslatorViewModelMapper.map(word),text)
+                view?.showTranslate(mWordFromTranslatorViewModelMapper.map(word), text)
             }
 
             override fun onError(e: Throwable) {
