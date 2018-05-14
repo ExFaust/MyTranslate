@@ -18,4 +18,8 @@ class RealmDataSource(private val mLocalApi: LocalRealm) : DBDataSource {
         return mLocalApi.searchWord(word)
     }
 
+    override fun removeWord(word: WordFromDBEntity): Observable<List<WordFromDBEntity>> {
+        return mLocalApi.removeWord(word)
+    }
+
 }

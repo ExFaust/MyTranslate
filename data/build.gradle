@@ -17,6 +17,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_KEY", '"key=trnsl.1.1.20180507T090054Z.aec3fb37486a39ce.11091f48ecf90ef575d0f8e2751528ed1a1d2c38"'
+        buildConfigField "String", "ID_FIELD", '"id"'
 
     }
 

@@ -10,4 +10,6 @@ interface LocalRealm {
     fun loadWords(): Observable<List<WordFromDBEntity>>
 
     fun searchWord(word: String): Observable<List<WordFromDBEntity>>
+
+    fun removeWord(word: WordFromDBEntity): Observable<List<WordFromDBEntity>>
 }

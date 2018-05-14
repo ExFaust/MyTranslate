@@ -3,6 +3,7 @@ package com.somename.mytranslate.screen.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -17,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_translate.*
 import javax.inject.Inject
 
 class TranslateActivity : AppCompatActivity(), TranslatePresenter.View {
-
 
     private var mLoadingView: LoadingView? = null
 
@@ -68,9 +68,7 @@ class TranslateActivity : AppCompatActivity(), TranslatePresenter.View {
         yandexTextView.visibility = View.VISIBLE
         translateTitleTextView.visibility = View.VISIBLE
         buttonOk.setOnClickListener {
-            mPresenter.addWord(wordFromTranslatorViewModel, originalText)
-            startActivity(Intent(this,ScrollingActivity::class.java))
-            finish()
+            mPresenter.searchWord(wordFromTranslatorViewModel, originalText)
         }
         buttonInverse.setOnClickListener {
             val lang = wordFromTranslatorViewModel.langWord
@@ -94,6 +92,20 @@ class TranslateActivity : AppCompatActivity(), TranslatePresenter.View {
 
     override fun showError() {
         Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMessage(originalText: String) {
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.attention))
+                .setMessage(String.format(getString(R.string.exist_word_message),originalText))
+                .setPositiveButton(getString(android.R.string.ok), null)
+                .create()
+                .show()
+    }
+
+    override fun goBack() {
+        startActivity(Intent(this, ScrollingActivity::class.java))
+        finish()
     }
 
     public override fun onDestroy() {

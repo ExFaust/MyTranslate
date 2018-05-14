@@ -1,7 +1,9 @@
 package com.somename.mytranslate.screen.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
@@ -23,9 +25,10 @@ import java.util.ArrayList
 
 import javax.inject.Inject
 import android.view.MenuItem
+import android.view.View
 
 
-class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, ScrollingPresenter.View {
+class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, ScrollingPresenter.View, RecyclerAdapter.OnClickListener {
 
     private var mLoadingView: LoadingView? = null
 
@@ -45,6 +48,7 @@ class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, 
         mAdapter = RecyclerAdapter(ArrayList())
         mAdapter!!.attachToRecyclerView(recyclerView)
         mAdapter!!.setOnItemClickListener(this)
+        mAdapter!!.setOnRemoveClickListener(this)
 
         val app = application as AppDelegate
         app.mainComponent?.inject(this)
@@ -75,6 +79,18 @@ class ScrollingActivity : AppCompatActivity(), BaseAdapter.OnItemClickListener, 
 
     override fun onItemClick(position: Int) {
 
+    }
+
+    override fun onRemoveClick(position: Int) {
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.attention))
+                .setMessage(getString(R.string.remove_question))
+                .setPositiveButton(getString(android.R.string.ok), { _: DialogInterface, _: Int ->
+                    mAdapter?.getItem(position)?.let { mPresenter.removeWord(it) }
+                })
+                .setNegativeButton(getString(android.R.string.no),null)
+                .create()
+                .show()
     }
 
     public override fun onDestroy() {

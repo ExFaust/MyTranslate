@@ -11,4 +11,6 @@ interface DBRepository {
 
     fun searchWord(word: String): Observable<List<WordFromDB>>
 
+    fun removeWord(word: WordFromDB): Observable<List<WordFromDB>>
+
 }

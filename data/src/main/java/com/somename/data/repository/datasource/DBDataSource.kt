@@ -11,4 +11,6 @@ interface DBDataSource {
 
     fun searchWord(word: String): Observable<List<WordFromDBEntity>>
 
+    fun removeWord(word: WordFromDBEntity): Observable<List<WordFromDBEntity>>
+
 }

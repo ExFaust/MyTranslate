@@ -27,4 +27,8 @@ internal constructor(moviesRealmDataSourceFactory: RealmDataSourceFactory, priva
     override fun searchWord(word: String): Observable<List<WordFromDB>> {
         return mDataSource.searchWord(word).map(mWordFromDBEntityMapper::reverseMap)
     }
+
+    override fun removeWord(word: WordFromDB): Observable<List<WordFromDB>> {
+        return mDataSource.removeWord(mWordFromDBEntityMapper.map(word)).map(mWordFromDBEntityMapper::reverseMap)
+    }
 }

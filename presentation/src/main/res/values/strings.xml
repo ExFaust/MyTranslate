@@ -15,4 +15,7 @@
     <string name="yandex_text">Переведено сервисом «Яндекс.Переводчик»\n https://translate.yandex.ru/</string>
     <string name="translate_title">Перевод:</string>
     <string name="search">Поиск</string>
+    <string name="attention">Внимание!</string>
+    <string name="remove_question">Удалить слово?</string>
+    <string name="exist_word_message">Слово \"%1$s\" уже есть в словаре.</string>
 </resources>

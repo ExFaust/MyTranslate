@@ -7,11 +7,7 @@ import io.reactivex.observers.DisposableObserver
 
 abstract class UseCase<T>(private val executorThread: Scheduler, private val uiThread: Scheduler) {
 
-    private val compositeDisposable: CompositeDisposable
-
-    init {
-        compositeDisposable = CompositeDisposable()
-    }
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun execute(disposableObserver: DisposableObserver<T>?) {
 

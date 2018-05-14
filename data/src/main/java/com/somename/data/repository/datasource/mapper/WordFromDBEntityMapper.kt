@@ -15,6 +15,7 @@ constructor() : Mapper<WordFromDB, WordFromDBEntity>() {
         wordFromDB.langTranslatedWord = value.langTranslatedWord
         wordFromDB.text = value.text
         wordFromDB.translatedText = value.translatedText
+        wordFromDB.id = value.id
         return wordFromDB
     }
 
@@ -24,6 +25,7 @@ constructor() : Mapper<WordFromDB, WordFromDBEntity>() {
         wordFromDBEntity.langTranslatedWord = value.langTranslatedWord
         wordFromDBEntity.text = value.text
         wordFromDBEntity.translatedText = value.translatedText
+        wordFromDBEntity.id = value.id
         return wordFromDBEntity
     }
 

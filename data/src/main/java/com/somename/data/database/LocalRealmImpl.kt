@@ -1,6 +1,7 @@
 package com.somename.data.database
 
 
+import com.somename.data.BuildConfig
 import com.somename.data.content.WordFromDBEntity
 import io.reactivex.Observable
 import io.reactivex.annotations.NonNull
@@ -29,6 +30,13 @@ class LocalRealmImpl(@param:NonNull private val mRealm: Realm) : LocalRealm {
         }
     }
 
+    override fun removeWord(word: WordFromDBEntity): Observable<List<WordFromDBEntity>> {
+        return Observable.create<List<WordFromDBEntity>> { emitter ->
+            emitter.onNext(removeFromRealm(word))
+            emitter.onComplete()
+        }
+    }
+
     private fun searchInRealm(word: String): List<WordFromDBEntity> {
         return mRealm.where(WordFromDBEntity::class.java)
                 .contains("text", word)
@@ -44,6 +52,14 @@ class LocalRealmImpl(@param:NonNull private val mRealm: Realm) : LocalRealm {
     }
 
     private fun loadFromRealm(): List<WordFromDBEntity> {
+        return mRealm.where(WordFromDBEntity::class.java).findAll()
+    }
+
+    private fun removeFromRealm(word: WordFromDBEntity): List<WordFromDBEntity> {
+        mRealm.executeTransaction { realm1 ->
+            val result = realm1.where(WordFromDBEntity::class.java).equalTo(BuildConfig.ID_FIELD, word.id).findAll()
+            result.deleteAllFromRealm()
+        }
         return mRealm.where(WordFromDBEntity::class.java).findAll()
     }
 }
